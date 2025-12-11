@@ -26,17 +26,18 @@ RUN mvn clean install -DskipTests=true
 
 # Import small size java image
 
-FROM openjdk:17-alpine
+FROM eclipse-temurin:17-jre-alpine
 
 WORKDIR /app 
 
 # Copy build from stage 1 (builder)
 
-COPY --from=builder /app/target/*.jar /app/target/expenseapp.jar
+COPY --from=builder /app/target/*.jar /app/expenseapp.jar
 
 # Expose application port 
 
 EXPOSE 8080
 
 # Start the application
-ENTRYPOINT ["java", "-jar", "/app/target/expenseapp.jar"]
+CMD ["java", "-jar", "/app/expenseapp.jar"]
+
